@@ -1,14 +1,19 @@
 const jwt = require("jsonwebtoken");
-const config = require("../config/config");
-const timeHelpers = require("../helpers/timeHelper");
-const message = require("../utils/responseWeb/index");
+const sessionModel = require("../models/user/userSession");
+const timeHelpers = require("../helpers/TimeHelper");
+const message = require("../utils/responseWeb/");
 const sendResponse = require("../utils/responseWeb/responseHandler");
-const SECRET = config.jwt.secret;
-const { studentMiddlerware } = require("../apps/Students/auth/domains/index");
+const SECRET = process.env.JWT_SECRET;
+
 // check session in database
 const checkSession = async (sessionId = null) => {
   try {
-    const session = studentMiddlerware(sessionId);
+    const session = await sessionModel
+      .findOne({
+        sessionId: sessionId,
+      })
+      .select({ createdAt: 0, updatedAt: 0, __v: 0 });
+
     if (!session) return false;
     const expired = await timeHelpers.isExpired(session.expiredIn);
     if (expired) return false;
@@ -36,7 +41,8 @@ const verifyToken = async (token) => {
   }
 };
 
-exports.verifyStudent = async (req, res, next) => {
+// verify token user
+exports.verifyUser = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     //   console.log(token)
@@ -59,8 +65,7 @@ exports.verifyStudent = async (req, res, next) => {
           message: "invalid token or please re login",
         })
       );
-    //   if (!ROLE.includes(verify.userId.role)) return sendResponse(res,message.errorUnauthorized({message : 'You Are Not Authorized To Access This Page'}));
-    req.studentAuth = verify;
+    req.AuthUser = verify;
     return next();
   } catch (error) {
     return sendResponse(res, message.errorServiceResponse(error));

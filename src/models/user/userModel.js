@@ -48,6 +48,17 @@ const schema = new Schema(
     fullName: {
       type: String,
     },
+
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
+
+    phone: {
+      type: String,
+    },
+
     additionalData: additionalDataSchema,
     isActive: {
       type: Boolean,

@@ -3,11 +3,9 @@ const message = require("../../../utils/responseWeb");
 
 module.exports = async ({ req }) => {
   try {
-    const email = req.body.email;
-    const password = req.body.password;
-    const fullName = req.body.fullName;
+    const payload = req.body;
 
-    const newUser = await registerDomain(email, password, fullName);
+    const newUser = await registerDomain(payload);
 
     return message.successResponse({
       message: "Success Register User",

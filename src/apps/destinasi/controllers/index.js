@@ -4,4 +4,5 @@ module.exports = {
   listDestinasi: require("./listDestinasiController"),
   showDestinasi: require("./showDestinasiController"),
   updateDestinasi: require("./updateDestinasiController"),
+  visitDestinasi: require("./visitDestinasiController"),
 };

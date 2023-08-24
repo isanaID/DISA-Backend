@@ -82,4 +82,18 @@ router
       });
   });
 
+router.route("/destinasi/visit").post(verifyUser, (req, res) => {
+  req = adaptRequest(req);
+  destinasi
+    .visitDestinasi({
+      data: req.body,
+    })
+    .then((result) => {
+      sendResponse(res, result);
+    })
+    .catch((error) => {
+      sendResponse(res, error);
+    });
+});
+
 module.exports = router;

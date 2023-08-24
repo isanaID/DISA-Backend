@@ -4,4 +4,5 @@ module.exports = {
   updateDestinasi: require("./updateDestinasiDomain"),
   deleteDestinasi: require("./deleteDestinasiDomain"),
   showDestinasi: require("./showDestinasiDomain"),
+  visitDestinasi: require("./visitDestinasiDomain"),
 };

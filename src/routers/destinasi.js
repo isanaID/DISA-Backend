@@ -10,7 +10,7 @@ const { destinasi } = require("../apps/destinasi");
 
 router
   .route("/destinasi")
-  .get(verifyUser, (req, res) => {
+  .get((req, res) => {
     req = adaptRequest(req);
     destinasi
       .listDestinasi({
@@ -67,7 +67,7 @@ router
         sendResponse(res, error);
       });
   })
-  .get(verifyUser, (req, res) => {
+  .get((req, res) => {
     req = adaptRequest(req);
     destinasi
       .showDestinasi({

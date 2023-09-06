@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
-const uniqueValidator = require("mongoose-unique-validator");
-const mongooseDelete = require("mongoose-delete"); // Added soft delete plugin
 
 const myCustomLabels = {
   totalDocs: "itemCount",
@@ -22,38 +20,18 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema(
   {
-    name: {
-      type: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    },
+    destinasi: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "destinasis",
       required: true,
     },
-    code: {
+    review: {
       type: String,
       required: true,
-      unique: true,
-    },
-    address: {
-      type: String,
-    },
-
-    image_url: String,
-    isShow: {
-      type: Boolean,
-      default: false,
-    },
-    city: {
-      type: String,
-    },
-    geolocation: {
-      type: Array,
-      required: true,
-      default: [0, 0],
-    },
-    description: {
-      type: String,
-    },
-    visitor: {
-      type: Number,
-      default: 0,
     },
   },
   {
@@ -74,5 +52,5 @@ schema.method("toJSON", function () {
 });
 schema.plugin(mongoosePaginate);
 schema.plugin(aggregatePaginate);
-const Destinasi = mongoose.model("destinasi", schema);
-module.exports = Destinasi;
+const Ulasan = mongoose.model("ulasan", schema);
+module.exports = Ulasan;

@@ -8,6 +8,34 @@ const sendResponse = require("../utils/responseWeb/responseHandler");
 
 const { destinasi } = require("../apps/destinasi");
 
+const multer = require("multer");
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype == "image/png" ||
+    file.mimetype == "image/jpg" ||
+    file.mimetype == "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public");
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().getTime() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({
+  storage: fileStorage,
+  fileFilter,
+});
+
 router
   .route("/destinasi")
   .get((req, res) => {
@@ -23,11 +51,12 @@ router
         sendResponse(res, error);
       });
   })
-  .post(verifyUser, (req, res) => {
+  .post(verifyUser, upload.single("image_url"), (req, res) => {
     req = adaptRequest(req);
+    console.log({ file: req.file });
     destinasi
       .createDestinasi({
-        data: req.body,
+        data: { ...req.body, image_url: `public/${req?.file?.filename}` },
       })
       .then((result) => {
         sendResponse(res, result);

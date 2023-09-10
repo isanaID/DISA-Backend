@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const sessionModel = require("../models/user/userSession");
-const timeHelpers = require("../helpers/TimeHelper");
+const timeHelpers = require("../helpers/timeHelper");
 const message = require("../utils/responseWeb/");
 const sendResponse = require("../utils/responseWeb/responseHandler");
 const SECRET = process.env.JWT_SECRET;

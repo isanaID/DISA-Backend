@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const timeHelpers = require("../../helpers/TimeHelper");
+const timeHelpers = require("../../helpers/timeHelper");
 
 const Schema = mongoose.Schema;
 

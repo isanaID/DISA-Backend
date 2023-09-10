@@ -17,7 +17,7 @@ const SessionSchema = new Schema(
     },
     expiredIn: {
       type: Date,
-      expires: 60,
+      expires: 6000,
     },
     createdAt: {
       type: Date,

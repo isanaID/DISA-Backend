@@ -14,7 +14,7 @@ router
     req = adaptRequest(req);
     ulasan
       .listUlasan({
-        data: req,
+        data: req.queryParams,
       })
       .then((result) => {
         sendResponse(res, result);

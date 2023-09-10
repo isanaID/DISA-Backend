@@ -37,4 +37,45 @@ router.route("/auth/register").post((req, res) => {
     });
 });
 
+router.route("/user").get((req, res) => {
+  req = adaptRequest(req);
+  auth
+    .listUser({
+      data: req.queryParams,
+    })
+    .then((result) => {
+      sendResponse(res, result);
+    })
+    .catch((error) => {
+      console.log(error);
+      sendResponse(res, error);
+    });
+});
+
+router
+  .route("/user/:id")
+  .get((req, res) => {
+    req = adaptRequest(req);
+    auth
+      .profile(req.pathParams.id)
+      .then((result) => {
+        sendResponse(res, result);
+      })
+      .catch((error) => {
+        console.log(error);
+        sendResponse(res, error);
+      });
+  })
+  .put((req, res) => {
+    req = adaptRequest(req);
+    auth
+      .updateUser({ id: req.pathParams.id, data: req.body })
+      .then((result) => {
+        sendResponse(res, result);
+      })
+      .catch((error) => {
+        console.log(error);
+        sendResponse(res, error);
+      });
+  });
 module.exports = router;

@@ -1,0 +1,15 @@
+const { updateUser } = require("../domains");
+
+const message = require("../../../utils/responseWeb");
+
+module.exports = async ({ data, id }) => {
+  try {
+    let result = await updateUser(id, data);
+    return message.successResponse({
+      message: "success update user",
+      data: result,
+    });
+  } catch (error) {
+    return message.failureResponse(error);
+  }
+};

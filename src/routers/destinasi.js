@@ -42,7 +42,7 @@ router
     req = adaptRequest(req);
     destinasi
       .listDestinasi({
-        data: req,
+        data: req.queryParams,
       })
       .then((result) => {
         sendResponse(res, result);
@@ -53,7 +53,6 @@ router
   })
   .post(verifyUser, upload.single("image_url"), (req, res) => {
     req = adaptRequest(req);
-    console.log({ file: req.file });
     destinasi
       .createDestinasi({
         data: { ...req.body, image_url: `public/${req?.file?.filename}` },
@@ -68,11 +67,12 @@ router
 
 router
   .route("/destinasi/:id")
-  .put(verifyUser, (req, res) => {
+  .put(verifyUser, upload.single("image_url"), (req, res) => {
     req = adaptRequest(req);
     destinasi
       .updateDestinasi({
-        data: req.body,
+        data: { ...req.body, image_url: `public/${req?.file?.filename}` },
+
         destinasiId: req.pathParams,
       })
       .then((result) => {

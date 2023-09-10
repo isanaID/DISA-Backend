@@ -33,8 +33,6 @@ app.options("*", cors());
 app.use(logger("dev"));
 
 //template engine
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "..", "views"));
 // app.use("/public", express.static(path.join(__dirname, "..", "public")));
 app.use("/public", express.static(path.join(__dirname, "../..", "public")));
 // set security HTTP headers
@@ -54,17 +52,6 @@ app.use(mongoSanitize());
 app.use(compression());
 
 // home service
-app.get("/", (req, res) => {
-  return res.status(200).render("index");
-});
-
-app.get("/policy", (req, res) => {
-  return res.status(200).render("policy");
-});
-
-app.get("/email", (req, res) => {
-  return res.status(200).render("email/demo_school");
-});
 
 // v1 api routes
 app.use("/v1", routes);
